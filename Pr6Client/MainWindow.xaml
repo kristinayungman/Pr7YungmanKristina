@@ -1,0 +1,78 @@
+﻿<Window x:Class="Pr6Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pr6Client"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="list"
+          ItemsSource="{Binding Servs}"
+          SelectedItem="{Binding CurrentServ}"
+          SelectionChanged="Change">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,5,0">Название:</TextBlock>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,5,0">Описание:</TextBlock>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Description}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,5,0">Продолжительность (мин):</TextBlock>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding DurationMinutes}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,5,0">Цена:</TextBlock>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Price, StringFormat={}{0:C}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,5,0">Активен:</TextBlock>
+                            <TextBlock Text="{Binding IsActive}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Column="2" Margin="0,10,0,0">
+            <Label FontSize="16">Фильтр по активности</Label>
+            <ComboBox x:Name="ActiveFilterComboBox" SelectionChanged="ActiveFilter" Width="150" Margin="5">
+                <ComboBoxItem Content="Все"/>
+                <ComboBoxItem Content="Активные"/>
+                <ComboBoxItem Content="Неактивные"/>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="0,100,0,0">
+            <Label FontSize="16">Фильтр по времени</Label>
+            <TextBox x:Name="TimeFilterComboBox2" Text="{Binding minfilt, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" TextChanged="TimeFilterComboBox2_TextChanged"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="0,200,0,0">
+            <Button Click="Delete" Content="Удалить" Margin="0,0,0,10"></Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" x:Name="Current">
+            <Label Content="Название"></Label>
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Описание"></Label>
+            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Продолжительность (мин):"></Label>
+            <TextBox Text="{Binding DurationMinutes, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"/>
+            <Label Content="Цена"></Label>
+            <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"/>
+            <Label Content="Активность"></Label>
+            <CheckBox Content="Да" IsChecked="{Binding IsActive,UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+
+            <Button Click="Create" Content="Добавить" Margin="0,10,0,10"></Button>
+            <Button Click="Button_Click" Content="Изменить частично(Patch)" Margin="0,0,0,10"></Button>
+            <Button Click="ChangeWhole" Content="Изменить полностью(Put)" Margin="0,0,0,10"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
